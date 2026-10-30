@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://palora.up.railway.app/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://palora.up.railway.app/uploads/:path*" },
+    { "source": "/storage/:path*", "destination": "https://palora.up.railway.app/storage/:path*" },
+    { "source": "/((?!assets/|images/|mediapipe/|ocr/|.*\\..*).*)", "destination": "/index.html" }
+  ]
+}
