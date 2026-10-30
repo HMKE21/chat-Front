@@ -55,7 +55,7 @@ export default function AppShell() {
       </aside>
       <main className="shell__main"><Outlet /></main>
       <nav className="shell__tabs">
-        {items.slice(0, 4).map((i) => (
+        {items.slice(0, 5).map((i) => (
           <NavLink key={i.key} to={i.route} className={({ isActive }) => `shell__tab${isActive ? ' is-active' : ''}`}>
             <Icon name={ICONS[i.icon] || i.icon} size={22} />
             <span>{label(i)}</span>

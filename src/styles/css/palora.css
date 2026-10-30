@@ -32,7 +32,7 @@ html[data-theme] :is(h1,h2,h3,h4) { font-family:var(--font-display); letter-spac
 
 /* ---------- app shell: slim navy rail ---------- */
 html[data-theme] .shell { background:var(--pa-canvas); color:var(--pa-text); }
-html[data-theme] .shell__side { width:78px; padding:14px 10px; gap:6px; align-items:center; background:var(--pa-rail); border-inline-end:0; color:var(--pa-rail-text); }
+html[data-theme] .shell__side { width:88px; padding:14px 10px; gap:6px; align-items:center; background:var(--pa-rail); border-inline-end:0; color:var(--pa-rail-text); }
 html[data-theme] .shell__brand { padding:0; margin:2px 0 14px; width:46px; height:46px; display:grid; place-items:center; }
 html[data-theme] .shell__brand img { width:44px; height:44px; border-radius:13px; display:block; }
 html[data-theme] .shell__nav { align-items:center; width:100%; gap:6px; }
@@ -220,3 +220,9 @@ html[data-theme="dark"] .pl-doc__intro { background:rgba(43,123,255,.12); }
   .pl-nav .pl-btn--ghost { display:none; }
 }
 @media (prefers-reduced-motion:no-preference) { .pl-btn, .pl-icon, .pl-card { transition:background .15s, border-color .15s, transform .15s; } .pl-card:hover { transform:translateY(-2px); } }
+
+/* app rail: keep labels whole words, never split "Notifications" into "Notificatio / ns" */
+html[data-theme] .shell__link { padding-inline:2px; }
+html[data-theme] .shell__link > span { max-width:100%; font-size:.625rem; line-height:1.25; text-align:center; overflow-wrap:normal; word-break:normal; hyphens:none; text-wrap:balance; }
+
+@media (max-width:800px){ html[data-theme] .shell__tab{min-width:0;padding-inline:2px} html[data-theme] .shell__tab > span{max-width:100%;font-size:.625rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal;word-break:normal} }

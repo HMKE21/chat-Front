@@ -4,10 +4,9 @@ import { api, errorMessage } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-
-const card = { background: 'var(--surface, #fff)', border: '1px solid var(--border, rgba(0,0,0,.08))', borderRadius: 16, padding: 20, display: 'flex', flexDirection: 'column', gap: 12 };
-const input = { padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border, rgba(0,0,0,.15))', font: 'inherit', background: 'transparent', color: 'inherit' };
-const btn = { padding: '10px 16px', borderRadius: 10, border: 0, background: '#4f46e5', color: '#fff', fontWeight: 700, cursor: 'pointer', alignSelf: 'flex-start' };
+import Icon from '../components/Icon';
+import { Avatar, Badge } from '../admin/ui';
+import '../admin/admin.css';
 
 export default function Settings() {
   const { user, updateUser, logout } = useAuth();
@@ -41,48 +40,69 @@ export default function Settings() {
     try { await api.del(`/api/v1/auth/sessions/${id}`); setSessions((s) => s.filter((x) => x.id !== id)); } catch { /* ignore */ }
   }
 
+  const MODES = [['light', L('Light', 'فاتح')], ['classic', L('Classic', 'كلاسيك')], ['dark', L('Dark', 'داكن')]];
+  const shownName = name || user?.full_name || user?.email || '';
+
   return (
-    <div style={{ maxWidth: 720, margin: '0 auto', padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h1 style={{ margin: 0 }}>{L('Settings', 'الإعدادات')}</h1>
-
-      <form style={card} onSubmit={save}>
-        <h3 style={{ margin: 0 }}>{L('Profile', 'الملف الشخصي')}</h3>
-        <label>{L('Name', 'الاسم')}<input style={{ ...input, width: '100%' }} value={name} onChange={(e) => setName(e.target.value)} minLength={2} required /></label>
-        <label>{L('Phone', 'الموبايل')}<input style={{ ...input, width: '100%' }} dir="ltr" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
-        <div style={{ opacity: .7, fontSize: '.9rem' }} dir="ltr">{user?.email}</div>
-        <button style={btn} type="submit">{L('Save', 'حفظ')}</button>
-        {msg && <div style={{ color: msg.ok ? '#16a34a' : '#dc2626' }}>{msg.text}</div>}
-      </form>
-
-      <div style={card}>
-        <h3 style={{ margin: 0 }}>{L('Appearance & language', 'المظهر واللغة')}</h3>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {['light', 'classic', 'dark'].map((m) => (
-            <button key={m} type="button" style={{ ...btn, background: mode === m ? '#4f46e5' : 'rgba(99,102,241,.15)', color: mode === m ? '#fff' : 'inherit' }} onClick={() => setMode(m)}>{m}</button>
-          ))}
-          {['en', 'ar'].map((l) => (
-            <button key={l} type="button" style={{ ...btn, background: locale === l ? '#4f46e5' : 'rgba(99,102,241,.15)', color: locale === l ? '#fff' : 'inherit' }} onClick={() => setLocale(l)}>{l === 'ar' ? 'العربية' : 'English'}</button>
-          ))}
+    <div className="ad ad-embed">
+      <div className="ad-page ad-page--narrow">
+        <div className="ad-pagehead">
+          <div><h2 className="ad-embed__title">{L('Settings', 'الإعدادات')}</h2><p>{L('Your profile, look and signed-in devices.', 'ملفك الشخصي والمظهر والأجهزة المسجّل دخولك منها.')}</p></div>
         </div>
-      </div>
 
-      <div style={card}>
-        <h3 style={{ margin: 0 }}>{L('Chat', 'الشات')}</h3>
-        <Link to="/app/messages/settings">{L('Chat privacy, wallpapers & notifications', 'خصوصية الشات والخلفيات والإشعارات')}</Link>
-      </div>
-
-      <div style={card}>
-        <h3 style={{ margin: 0 }}>{L('Devices', 'الأجهزة')}</h3>
-        {sessions.length === 0 && <div style={{ opacity: .7 }}>{L('No other sessions.', 'مفيش جلسات تانية.')}</div>}
-        {sessions.map((s) => (
-          <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' }}>
-            <span>{s.device_label || s.user_agent || `#${s.id}`}{s.is_current ? ` (${L('this device', 'الجهاز ده')})` : ''}</span>
-            {!s.is_current && <button type="button" style={{ ...btn, background: '#dc2626' }} onClick={() => revoke(s.id)}>{L('Sign out', 'خروج')}</button>}
+        <form className="ad-card" onSubmit={save}>
+          <div className="ad-card__head">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <Avatar name={shownName} />
+              <div className="ad-cell-main"><b>{shownName}</b><small dir="ltr">{user?.email}</small></div>
+            </div>
           </div>
-        ))}
-      </div>
+          <div className="ad-formgrid">
+            <label className="ad-field">{L('Name', 'الاسم')}<input className="ad-input" value={name} onChange={(e) => setName(e.target.value)} minLength={2} required /></label>
+            <label className="ad-field">{L('Phone', 'الموبايل')}<input className="ad-input" dir="ltr" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
+          </div>
+          {msg && <div className={`ad-alert${msg.ok ? ' ad-alert--ok' : ''}`} role={msg.ok ? 'status' : 'alert'} style={{ marginTop: 14 }}>{msg.text}</div>}
+          <div style={{ marginTop: 16 }}><button className="ad-btn ad-btn--primary" type="submit">{L('Save changes', 'حفظ التغييرات')}</button></div>
+        </form>
 
-      <button type="button" style={{ ...btn, background: '#dc2626' }} onClick={async () => { await logout(); navigate('/auth/login', { replace: true }); }}>{L('Sign out', 'تسجيل الخروج')}</button>
+        <section className="ad-card">
+          <div className="ad-card__head"><div><h2>{L('Appearance & language', 'المظهر واللغة')}</h2></div></div>
+          <div className="ad-set-row">
+            <span className="ad-muted">{L('Theme', 'المظهر')}</span>
+            <div className="ad-tabs" role="group" aria-label={L('Theme', 'المظهر')}>
+              {MODES.map(([m, label]) => <button key={m} type="button" className={`ad-tab${mode === m ? ' is-on' : ''}`} aria-pressed={mode === m} onClick={() => setMode(m)}>{label}</button>)}
+            </div>
+          </div>
+          <div className="ad-set-row">
+            <span className="ad-muted">{L('Language', 'اللغة')}</span>
+            <div className="ad-tabs" role="group" aria-label={L('Language', 'اللغة')}>
+              {['en', 'ar'].map((l) => <button key={l} type="button" className={`ad-tab${locale === l ? ' is-on' : ''}`} aria-pressed={locale === l} onClick={() => setLocale(l)}>{l === 'ar' ? 'العربية' : 'English'}</button>)}
+            </div>
+          </div>
+        </section>
+
+        <Link to="/app/messages/settings" className="ad-card ad-set-link">
+          <span className="ad-stat__ic"><Icon name="message-square" size={20} /></span>
+          <div className="ad-cell-main"><b>{L('Chat settings', 'إعدادات الشات')}</b><small>{L('Privacy, wallpapers and notifications', 'الخصوصية والخلفيات والإشعارات')}</small></div>
+          <Icon name="chevron-right" size={18} />
+        </Link>
+
+        <section className="ad-card">
+          <div className="ad-card__head"><div><h2>{L('Devices', 'الأجهزة')}</h2><p>{L('Where you are signed in right now.', 'الأجهزة المسجّل دخولك منها حاليًا.')}</p></div></div>
+          {sessions.length === 0 && <div className="ad-muted">{L('No other sessions.', 'مفيش جلسات تانية.')}</div>}
+          <ul className="ad-list">
+            {sessions.map((s) => (
+              <li key={s.id}>
+                <span className="ad-stat__ic" style={{ margin: 0 }}><Icon name="monitor" size={18} /></span>
+                <div className="grow"><b>{s.device_label || s.user_agent || `#${s.id}`}</b></div>
+                {s.is_current ? <Badge tone="ok">{L('This device', 'الجهاز ده')}</Badge> : <button type="button" className="ad-btn ad-btn--sm ad-btn--danger" onClick={() => revoke(s.id)}>{L('Sign out', 'خروج')}</button>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div><button type="button" className="ad-btn ad-btn--danger" onClick={async () => { await logout(); navigate('/auth/login', { replace: true }); }}><Icon name="logout" size={16} />{L('Sign out', 'تسجيل الخروج')}</button></div>
+      </div>
     </div>
   );
 }
