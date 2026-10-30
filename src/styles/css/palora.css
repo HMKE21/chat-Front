@@ -136,7 +136,8 @@ html[data-theme] .auth-shell { --a-bg:var(--pa-canvas); --a-ink:var(--pa-text); 
 html[data-theme] .auth-btn { background:var(--pa-azure-600) !important; background-image:none !important; box-shadow:none !important; border-radius:14px; }
 html[data-theme] .auth-btn:hover { background:var(--pa-azure-700) !important; }
 html[data-theme] .auth-card { border-radius:24px; }
-html[data-theme] .auth-art-wrap { display:grid; place-items:center; }
+html[data-theme] .auth-art-wrap { display:none; place-items:center; }
+@media (min-width:1280px) { html[data-theme] .auth-art-wrap { display:grid; } }
 .pa-art { width:100%; max-width:380px; height:auto; }
 
 /* ---------- landing + privacy ---------- */
