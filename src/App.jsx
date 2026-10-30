@@ -41,6 +41,16 @@ const AdminMeetings = lazy(() => import('./admin/pages/Meetings'));
 const AdminReports = lazy(() => import('./admin/pages/Reports'));
 const AdminLogs = lazy(() => import('./admin/pages/Logs'));
 const AdminSettings = lazy(() => import('./admin/pages/Settings'));
+const AdminRoles = lazy(() => import('./admin/pages/Roles'));
+const AdminTeam = lazy(() => import('./admin/pages/Team'));
+const AdminActivity = lazy(() => import('./admin/pages/Activity'));
+const AdminAnalytics = lazy(() => import('./admin/pages/Analytics'));
+const AdminOversight = lazy(() => import('./admin/pages/Oversight'));
+const AdminMsgSettings = lazy(() => import('./admin/pages/MessagingSettings'));
+const AdminNotifSettings = lazy(() => import('./admin/pages/NotificationSettings'));
+const AdminSessions = lazy(() => import('./admin/pages/Sessions'));
+const AdminPolicies = lazy(() => import('./admin/pages/Policies'));
+const AdminAlerts = lazy(() => import('./admin/pages/Alerts'));
 
 /** The API's notification / e-mail links are /messages/:id and /meetings/:uuid — send them into the app. */
 function ToApp({ base }) {
@@ -89,6 +99,21 @@ export default function App() {
                       <Route path="reports" element={<AdminReports />} />
                       <Route path="logs" element={<AdminLogs />} />
                       <Route path="settings" element={<AdminSettings />} />
+                      <Route path="roles" element={<AdminRoles />} />
+                      <Route path="team" element={<AdminTeam />} />
+                      <Route path="activity" element={<AdminActivity />} />
+                      <Route path="analytics" element={<AdminAnalytics focus="platform" />} />
+                      <Route path="messaging/analytics" element={<AdminAnalytics focus="messaging" />} />
+                      <Route path="messaging/oversight" element={<AdminOversight />} />
+                      <Route path="messaging/settings" element={<AdminMsgSettings />} />
+                      <Route path="notifications/settings" element={<AdminNotifSettings />} />
+                      <Route path="sessions" element={<AdminSessions />} />
+                      <Route path="policies" element={<AdminPolicies />} />
+                      <Route path="alerts" element={<AdminAlerts view="alerts" />} />
+                      <Route path="incidents" element={<AdminAlerts view="incidents" />} />
+                      <Route path="security-logs" element={<AdminLogs fixed="security" />} />
+                      <Route path="audit-logs" element={<AdminLogs fixed="audit" />} />
+                      <Route path="meetings/monitoring" element={<Navigate to="/admin/meetings" replace />} />
                     </Route>
 
                     <Route element={<ProtectedRoute />}>
