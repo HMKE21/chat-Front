@@ -12,6 +12,8 @@ import AppShell from './layouts/AppShell';
 import ServerError from './pages/errors/ServerError';
 
 const NotFound = lazy(() => import('./pages/errors/NotFound'));
+const Landing = lazy(() => import('./pages/Landing'));
+const Privacy = lazy(() => import('./pages/Privacy'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
@@ -48,7 +50,9 @@ export default function App() {
               <ErrorBoundary>
                 <Suspense fallback={<PageLoading />}>
                   <Routes>
-                    <Route path="/" element={<Navigate to="/app/messages" replace />} />
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/privacy-policy" element={<Privacy />} />
 
                     {/* Public */}
                     <Route path="/auth/login" element={<Login />} />
