@@ -45,9 +45,9 @@ export function Pager({ meta, page, setPage }) {
     <div className="ad-pager">
       <span>{t('Total', 'الإجمالي')}: {meta.total}</span>
       <span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-        <button type="button" className="ad-btn ad-btn--sm" disabled={page <= 1} onClick={() => setPage(page - 1)}>{t('Prev', 'السابق')}</button>
+        <button type="button" className="ad-btn ad-btn--sm" disabled={page <= 1} onClick={() => setPage(page - 1)}><Icon name="chevron-left" size={14} />{t('Prev', 'السابق')}</button>
         <span>{page} / {meta.last_page}</span>
-        <button type="button" className="ad-btn ad-btn--sm" disabled={page >= meta.last_page} onClick={() => setPage(page + 1)}>{t('Next', 'التالي')}</button>
+        <button type="button" className="ad-btn ad-btn--sm" disabled={page >= meta.last_page} onClick={() => setPage(page + 1)}>{t('Next', 'التالي')}<Icon name="chevron-right" size={14} /></button>
       </span>
     </div>
   );
@@ -59,9 +59,16 @@ export function Modal({ title, onClose, children, footer }) {
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
   }, [onClose]);
+  const box = useRef(null);
+  useEffect(() => {
+    const prev = document.activeElement;
+    const first = box.current?.querySelector('input,select,textarea,button');
+    first?.focus();
+    return () => prev?.focus?.();
+  }, []);
   return (
     <div className="ad-modal" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="ad-dialog" role="dialog" aria-modal="true" aria-label={title}>
+      <div className="ad-dialog" ref={box} role="dialog" aria-modal="true" aria-label={title}>
         <h2>{title}</h2>
         {children}
         {footer && <div className="ad-dialog__foot">{footer}</div>}
@@ -88,9 +95,31 @@ export function Notice({ error, ok }) {
   return null;
 }
 
+export function Skeleton({ h = 16, w = '100%', style }) {
+  return <div className="ad-skel" style={{ height: h, width: w, ...style }} aria-hidden="true" />;
+}
+
 export function Empty({ loading, children }) {
   const { t } = useT();
-  return <div className="ad-empty">{loading ? t('Loading…', 'جارٍ التحميل…') : children || t('Nothing here yet', 'لا يوجد شيء بعد')}</div>;
+  if (loading) {
+    return (
+      <div role="status" aria-label={t('Loading…', 'جارٍ التحميل…')} style={{ display: 'grid', gap: 12, padding: '8px 0' }}>
+        {[0, 1, 2, 3].map((i) => <Skeleton key={i} h={40} style={{ opacity: 1 - i * 0.2 }} />)}
+      </div>
+    );
+  }
+  return (
+    <div className="ad-empty">
+      <span className="ad-empty__ic"><Icon name="inbox" size={24} /></span>
+      <span>{children || t('Nothing here yet', 'لا يوجد شيء بعد')}</span>
+    </div>
+  );
+}
+
+export function Avatar({ name, size }) {
+  const n = String(name || '?').trim();
+  const hue = [...n].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  return <span className={`ad-avatar${size === 'sm' ? ' ad-avatar--sm' : ''}`} style={{ background: `linear-gradient(135deg,hsl(${hue} 70% 52%),hsl(${(hue + 40) % 360} 70% 42%))` }}>{n.slice(0, 1).toUpperCase()}</span>;
 }
 
 export { Icon };

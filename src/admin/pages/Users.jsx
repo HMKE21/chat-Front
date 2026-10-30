@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { api, errorMessage } from '../../api/client';
-import { Badge, Empty, Field, Modal, Notice, Pager, fmtDate, useDebounced, useList, useT } from '../ui';
+import { Avatar, Badge, Empty, Field, Modal, Notice, Pager, fmtDate, useDebounced, useList, useT } from '../ui';
 
 const STATUS_TONE = { active: 'ok', pending: 'warn', suspended: 'bad', banned: 'bad' };
 
@@ -61,7 +61,7 @@ export default function Users() {
               <tbody>
                 {rows.map((u) => (
                   <tr key={u.id}>
-                    <td data-label={t('User', 'المستخدم')}><div className="ad-cell-main"><b>{u.name}</b><small dir="ltr">{u.email}</small></div></td>
+                    <td data-label={t('User', 'المستخدم')}><div style={{ display: 'flex', alignItems: 'center', gap: 12 }}><Avatar name={u.name} /><div className="ad-cell-main"><b>{u.name}</b><small dir="ltr">{u.email}</small></div></div></td>
                     <td data-label={t('Role', 'الدور')}><Badge tone={u.role === 'admin' ? 'brand' : ''}>{u.role}</Badge></td>
                     <td data-label={t('Status', 'الحالة')}><Badge tone={STATUS_TONE[u.status]}>{u.status}</Badge>{u.locked && <> <Badge tone="bad">{t('locked', 'مقفول')}</Badge></>}{!u.verified && <> <Badge tone="warn">{t('unverified', 'غير مؤكد')}</Badge></>}</td>
                     <td data-label={t('Last login', 'آخر دخول')}>{fmtDate(u.last_login_at, locale)}</td>

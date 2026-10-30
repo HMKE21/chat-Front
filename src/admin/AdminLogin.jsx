@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth, ApiError } from '../context/AuthContext';
 import { api, errorMessage } from '../api/client';
 import { useLanguage } from '../context/LanguageContext';
+import Icon from '../components/Icon';
 import './admin.css';
 
 /** Admin sign-in: /admin/login. Uses the normal login API, then lets only role "admin" through. */
@@ -40,12 +41,14 @@ export default function AdminLogin() {
     <div className="adl">
       <section className="adl__art">
         <div className="adl__top"><img src="/images/logo/uip-mark.png" alt="" /> Palora</div>
-        <h2>{t('Run the whole platform from one place', 'أدِر المنصة كلها من مكان واحد')}</h2>
-        <p>{t('Users, chats, meetings, reports, security logs and platform switches.', 'المستخدمين، المحادثات، الاجتماعات، البلاغات، سجلات الأمان وإعدادات المنصة.')}</p>
-        <ul>
-          <li>{t('Create, suspend and unlock accounts', 'إنشاء الحسابات وإيقافها وفك القفل')}</li>
-          <li>{t('End live meetings instantly', 'إنهاء الاجتماعات الجارية فورًا')}</li>
-          <li>{t('Maintenance mode and sign-up control', 'وضع الصيانة والتحكم في التسجيل')}</li>
+        <div>
+          <h2>{t('Run the whole platform from one place', 'أدِر المنصة كلها من مكان واحد')}</h2>
+          <p>{t('Users, chats, meetings, reports, security logs and platform switches.', 'المستخدمين، المحادثات، الاجتماعات، البلاغات، سجلات الأمان وإعدادات المنصة.')}</p>
+        </div>
+        <ul className="adl__feat">
+          <li><Icon name="users" size={20} />{t('Create, suspend and unlock accounts', 'إنشاء الحسابات وإيقافها وفك القفل')}</li>
+          <li><Icon name="video" size={20} />{t('End live meetings instantly', 'إنهاء الاجتماعات الجارية فورًا')}</li>
+          <li><Icon name="shield" size={20} />{t('Maintenance mode and sign-up control', 'وضع الصيانة والتحكم في التسجيل')}</li>
         </ul>
       </section>
       <section className="adl__form">
