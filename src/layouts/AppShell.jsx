@@ -26,7 +26,7 @@ export default function AppShell() {
   return (
     <div className="shell">
       <aside className="shell__side">
-        <div className="shell__brand">{locale === 'ar' ? 'تطبيقي' : 'SocialApp'}</div>
+        <div className="shell__brand">Palora</div>
         <nav className="shell__nav">
           {items.map((i) => (
             <NavLink key={i.key} to={i.route} className={({ isActive }) => `shell__link${isActive ? ' is-active' : ''}`}>

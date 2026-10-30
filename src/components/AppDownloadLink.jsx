@@ -56,8 +56,8 @@ export default function AppDownloadLink({ app, className = '', iconSize = 16, wi
     e.preventDefault();
     const res = await shareAppLink(
       app.url,
-      'UIP',
-      t('Join me on UIP — get the Android app:', 'انضم لي على UIP — حمّل تطبيق الأندرويد:'),
+      'Palora',
+      t('Join me on Palora — get the Android app:', 'انضم لي على Palora — حمّل تطبيق الأندرويد:'),
     );
     if (res === 'copied') setNote(t('Link copied ✓', 'تم نسخ الرابط ✓'));
     else if (res === 'failed') window.prompt(t('Copy the app link:', 'انسخ رابط التطبيق:'), app.url);

@@ -1,6 +1,12 @@
 // Auto-extracted from api/app/Views/layouts/auth-layout.php ($locale === 'ar' ? AR : EN pairs).
 // Shape matches useTranslations(dict) in context/LanguageContext.jsx.
 export default {
+  'Chat': 'دردش',
+  'Call': 'اتصل',
+  'Meet': 'اجتمع',
+  'Everyone you talk to,': 'كل اللي بتتكلم معاهم،',
+  'in one place': 'في مكان واحد',
+  'Palora brings your chats, voice and video calls, stories and meetings together — fast, private and simple.': 'Palora بيجمعلك الشات والمكالمات الصوتية والفيديو والستوريز والاجتماعات في مكان واحد — سريع وخاص وبسيط.',
   'ltr': 'rtl',
   'Where graduation projects meet real opportunity': 'حيث تلتقي مشاريع التخرج بالفرص الحقيقية',
   'A national platform connecting students and universities around university innovation — with AI-assisted evaluation and discovery.':
@@ -21,6 +27,4 @@ export default {
   'real opportunity': 'الفرص الحقيقية',
   'Skip to form': 'تخطَّ إلى النموذج',
   'Privacy policy': 'سياسة الخصوصية',
-  'UIP — Ultimate Intelligent Platform': 'UIP — Ultimate Intelligent Platform',
-  'ULTIMATE INTELLIGENT PLATFORM': 'ULTIMATE INTELLIGENT PLATFORM',
 };

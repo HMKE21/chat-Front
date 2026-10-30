@@ -2,7 +2,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import Icon from '../../components/Icon';
 import ErrorPage from './ErrorPage';
 
-/** 500 — something broke on our end, not the visitor's. `onRetry` lets the ErrorBoundary offer a reload instead of "Browse projects". */
+/** 500 — something broke on our end, not the visitor's. `onRetry` lets the ErrorBoundary offer a reload instead of "Open chats". */
 export default function ServerError({ onRetry }) {
   const { locale } = useLanguage();
   const isAr = locale === 'ar';

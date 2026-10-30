@@ -26,9 +26,9 @@ export default function NotFound() {
       extra={(
         <div className="lp2-err__links">
           {[
-            ['/projects', 'search', t('Explore Projects', 'استكشف المشاريع'), t('Browse published student work', 'تصفح المشاريع المنشورة')],
-            ['/verify-certificate', 'shield', t('Verify a Certificate', 'التحقق من شهادة'), t('Check a graduation certificate', 'تحقق من شهادة تخرج')],
-            ['/privacy-policy', 'lock', t('Privacy Policy', 'سياسة الخصوصية'), t('How we handle your data', 'إزاي بنتعامل مع بياناتك')],
+            ['/app/messages', 'message-square', t('Chats', 'المحادثات'), t('Open your conversations', 'افتح محادثاتك')],
+            ['/app/meetings', 'video', t('Meetings', 'الاجتماعات'), t('Start or join a meeting', 'ابدأ أو انضم لاجتماع')],
+            ['/app/settings', 'settings', t('Settings', 'الإعدادات'), t('Manage your account', 'إدارة حسابك')],
           ].map(([to, icon, title, sub]) => (
             <Link to={to} className="lp2-card lp2-err__link" key={to}>
               <span className="lp2-icon"><Icon name={icon} size={18} /></span>
@@ -38,9 +38,9 @@ export default function NotFound() {
         </div>
       )}
       primaryAction={
-        <Link to="/projects" className="btn btn-primary">
-          <Icon name="search" size={16} />
-          {t('Browse projects', 'تصفّح المشاريع')}
+        <Link to="/app/messages" className="btn btn-primary">
+          <Icon name="message-square" size={16} />
+          {t('Open chats', 'افتح المحادثات')}
         </Link>
       }
     />

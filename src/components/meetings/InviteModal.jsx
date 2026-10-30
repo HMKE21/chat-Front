@@ -158,9 +158,6 @@ export default function InviteModal({ meetingUuid, onClose, onSent }) {
           <button type="button" className={`tab-link${tab === 'single' ? ' is-active' : ''}`} onClick={() => setTab('single')}>
             {t('Single Invite')}
           </button>
-          <button type="button" className={`tab-link${tab === 'bulk' ? ' is-active' : ''}`} onClick={() => setTab('bulk')}>
-            {t('Bulk Invite')}
-          </button>
         </div>
 
         {tab === 'single' && singleResult ? (

@@ -46,10 +46,10 @@ export default function AuthLayout({ title, subtitle, error, success, wide = fal
       <a className="auth-skip" href="#auth-card">{t('Skip to form')}</a>
 
       <header className="auth-topbar">
-        <Link to="/" className="auth-brand" aria-label="SocialApp">
+        <Link to="/" className="auth-brand" aria-label="Palora">
           <img src="/images/logo/uip-mark.png" alt="" width="44" height="44" />
           <span className="auth-brand__text">
-            <strong>SocialApp</strong>
+            <strong>Palora</strong>
             
           </span>
         </Link>
@@ -73,13 +73,13 @@ export default function AuthLayout({ title, subtitle, error, success, wide = fal
       <div className={`auth-main ${wide ? 'auth-main--wide' : ''}`}>
         <section className="auth-hero">
           <span className="auth-pill">
-            {t('Learn')}<i /> {t('Innovate')}<i /> {t('Grow')}
+            {t('Chat')}<i /> {t('Call')}<i /> {t('Meet')}
           </span>
           <h2 className="auth-hero__title">
-            {t('Where graduation projects meet')} <span className="auth-grad-text">{t('real opportunity')}</span>
+            {t('Everyone you talk to,')} <span className="auth-grad-text">{t('in one place')}</span>
           </h2>
           <p className="auth-hero__sub">
-            {t('A national platform connecting students and universities around university innovation — with AI-assisted evaluation and discovery.')}
+            {t('Palora brings your chats, voice and video calls, stories and meetings together — fast, private and simple.')}
           </p>
         </section>
 
@@ -121,7 +121,6 @@ export default function AuthLayout({ title, subtitle, error, success, wide = fal
       <footer className="auth-footer">
         <Icon name="lock" size={14} />
         <span>{t('Your data is encrypted and protected under industry-standard security practices.')}</span>
-        <Link to="/privacy-policy">{t('Privacy policy')}</Link>
       </footer>
     </div>
   );
