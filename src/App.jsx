@@ -32,6 +32,15 @@ const MyMeetings = lazy(() => import('./pages/meetings/MyMeetings'));
 const MeetingCalendar = lazy(() => import('./pages/meetings/MeetingCalendar'));
 const MeetingDetails = lazy(() => import('./pages/meetings/MeetingDetails'));
 const MeetingRoom = lazy(() => import('./pages/meetings/MeetingRoom'));
+const AdminLogin = lazy(() => import('./admin/AdminLogin'));
+const AdminLayout = lazy(() => import('./admin/AdminLayout'));
+const AdminOverview = lazy(() => import('./admin/pages/Overview'));
+const AdminUsers = lazy(() => import('./admin/pages/Users'));
+const AdminConversations = lazy(() => import('./admin/pages/Conversations'));
+const AdminMeetings = lazy(() => import('./admin/pages/Meetings'));
+const AdminReports = lazy(() => import('./admin/pages/Reports'));
+const AdminLogs = lazy(() => import('./admin/pages/Logs'));
+const AdminSettings = lazy(() => import('./admin/pages/Settings'));
 
 /** The API's notification / e-mail links are /messages/:id and /meetings/:uuid — send them into the app. */
 function ToApp({ base }) {
@@ -69,6 +78,18 @@ export default function App() {
                     <Route path="/messages/*" element={<ToApp base="messages" />} />
                     <Route path="/meetings/*" element={<ToApp base="meetings" />} />
                     <Route path="/notifications" element={<Navigate to="/app/notifications" replace />} />
+
+                    {/* Admin panel: own login, own layout (checks role itself) */}
+                    <Route path="/admin/login" element={<AdminLogin />} />
+                    <Route path="/admin" element={<AdminLayout />}>
+                      <Route index element={<AdminOverview />} />
+                      <Route path="users" element={<AdminUsers />} />
+                      <Route path="conversations" element={<AdminConversations />} />
+                      <Route path="meetings" element={<AdminMeetings />} />
+                      <Route path="reports" element={<AdminReports />} />
+                      <Route path="logs" element={<AdminLogs />} />
+                      <Route path="settings" element={<AdminSettings />} />
+                    </Route>
 
                     <Route element={<ProtectedRoute />}>
                       <Route path="/join/group/:token" element={<JoinGroup />} />
