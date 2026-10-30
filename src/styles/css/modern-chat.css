@@ -1,0 +1,292 @@
+/* ==========================================================================
+   modern-chat.css — the modern, fully responsive look of the chat.
+   Loaded LAST (after palora.css). Everything is mobile-first:
+     phone  < 760px   : list OR chat, bottom tab bar, big touch targets
+     tablet 760–1099  : slim rail + list + chat side by side
+     laptop >= 1100   : rail + list + chat (+ info panel)
+   "html[data-theme][data-palette] body .msg-app[data-msg-app]" below is expanded at build time to a high-specificity chat prefix.
+   ========================================================================== */
+
+:root, html[data-theme][data-palette] {
+  --m-brand: #2563eb;
+  --m-brand-2: #4f46e5;
+  --m-grad: linear-gradient(135deg, #2f6bff 0%, #4a57f0 100%);
+  --m-bg: #f3f5fb;
+  --m-surface: #ffffff;
+  --m-soft: #f1f4fa;
+  --m-line: #e5e9f2;
+  --m-text: #0f172a;
+  --m-text-2: #55617f;
+  --m-text-3: #8893ad;
+  --m-theirs: #ffffff;
+  --m-theirs-text: #0f172a;
+  --m-ring: rgba(37, 99, 235, .22);
+  --m-shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+  --m-shadow-md: 0 8px 24px -10px rgba(15, 23, 42, .18);
+  --m-r-bubble: 20px;
+  --m-tab-h: 62px;
+  --m-safe-b: env(safe-area-inset-bottom, 0px);
+}
+html[data-theme="dark"][data-palette] {
+  --m-brand: #5b8cff;
+  --m-grad: linear-gradient(135deg, #3b7bff 0%, #5a63f5 100%);
+  --m-bg: #0a1022;
+  --m-surface: #0e1630;
+  --m-soft: #151e3f;
+  --m-line: #1f2a52;
+  --m-text: #eaf0ff;
+  --m-text-2: #a4b1d6;
+  --m-text-3: #7685ae;
+  --m-theirs: #17214a;
+  --m-theirs-text: #eaf0ff;
+  --m-ring: rgba(91, 140, 255, .3);
+  --m-shadow-sm: 0 1px 2px rgba(0, 0, 0, .35);
+  --m-shadow-md: 0 10px 28px -10px rgba(0, 0, 0, .6);
+}
+
+/* ---------- page shell ---------- */
+html[data-theme] body { background: var(--m-bg); }
+html[data-theme] .shell { background: var(--m-bg); }
+html[data-theme] .shell__main { min-width: 0; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] { --msg-rail-w: 372px; --msg-info-w: 320px; --msg-bubble-mine: #3566f5; background: var(--m-surface) !important; color: var(--m-text); }
+
+/* slim side nav (desktop / tablet) */
+html[data-theme] .shell__side { width: 76px; background: var(--m-surface) !important; border-inline-end: 1px solid var(--m-line) !important; color: var(--m-text-2); }
+html[data-theme] .shell__link { color: var(--m-text-3); border-radius: 16px; }
+html[data-theme] .shell__link:hover { background: var(--m-soft); color: var(--m-text); }
+html[data-theme] .shell__link.is-active { background: color-mix(in srgb, var(--m-brand) 12%, transparent); color: var(--m-brand); }
+html[data-theme] .shell__link.is-active::before { background: var(--m-brand); }
+html[data-theme] .shell__me { border-top-color: var(--m-line); }
+html[data-theme] .shell__btn { color: var(--m-text-2); border-radius: 12px; }
+html[data-theme] .shell__btn:hover { background: var(--m-soft); color: var(--m-text); }
+
+/* ---------- conversation rail ---------- */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-rail { background: var(--m-surface) !important; border-inline-end: 1px solid var(--m-line) !important; min-width: 0; display: flex; flex-direction: column; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-head { padding: 18px 18px 6px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-head__row { align-items: center; gap: 6px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-title { font: 800 1.5rem/1.2 var(--font-display) !important; letter-spacing: -.01em; color: var(--m-text) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new { height: 40px !important; padding: 0 16px !important; border-radius: 14px !important; background: var(--m-grad) !important; color: #fff !important; font-weight: 700 !important; box-shadow: 0 8px 18px -8px rgba(53, 102, 245, .65) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new:hover { filter: brightness(1.06); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-iconbtn, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-icon-btn { width: 40px !important; height: 40px !important; border-radius: 14px !important; color: var(--m-text-2) !important; background: transparent !important; transition: background .15s, color .15s; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-iconbtn:hover, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-icon-btn:hover { background: var(--m-soft) !important; color: var(--m-text) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-search { height: 46px; margin: 10px 18px 6px !important; padding-inline: 14px !important; border-radius: 16px !important; background: var(--m-soft) !important; border: 1px solid transparent !important; gap: 10px; color: var(--m-text-3); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-search:focus-within { background: var(--m-surface) !important; border-color: var(--m-brand) !important; box-shadow: 0 0 0 4px var(--m-ring) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-search input { font-size: 15px !important; color: var(--m-text) !important; }
+
+/* stories — one tidy, scrollable row */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-strip { gap: 14px; padding: 8px 18px 12px; min-height: 96px; flex: none; scroll-padding-inline: 18px; -webkit-overflow-scrolling: touch; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-tile { width: 62px; gap: 6px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-tile em { font-size: 11.5px; color: var(--m-text-2); font-weight: 500; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-ring { width: 58px; height: 58px; padding: 2.5px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-ring.is-new { background: conic-gradient(from 210deg, #2f6bff, #19b8e8, #7b5cff, #2f6bff) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-ring.is-seen { background: var(--m-line) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-ring.is-empty { background: transparent !important; border: 2px dashed var(--m-line); padding: 1.5px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-ring > .st-face { border: 2.5px solid var(--m-surface) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .st-plus { background: var(--m-brand) !important; color: #fff !important; border: 2px solid var(--m-surface); }
+
+/* filter chips — scrollable pills, never clipped */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filters { display: flex; flex-wrap: nowrap; gap: 8px; padding: 6px 18px 10px !important; overflow-x: auto; scrollbar-width: none; scroll-padding-inline: 18px; -webkit-overflow-scrolling: touch; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filters::-webkit-scrollbar { display: none; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filter { flex: none; height: 34px; padding: 0 14px !important; border-radius: 999px !important; font-size: 13.5px !important; font-weight: 600 !important; white-space: nowrap; background: var(--m-soft) !important; border: 1px solid transparent !important; color: var(--m-text-2) !important; display: inline-flex; align-items: center; gap: 6px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filter:hover { color: var(--m-text) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filter.is-active { background: var(--m-text) !important; color: var(--m-surface) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filter b { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--m-brand); color: #fff; font-size: 11px; display: inline-grid; place-items: center; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filter.is-active b { background: var(--m-surface); color: var(--m-text); }
+
+/* conversation rows */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-rail__list { padding: 4px 10px 14px !important; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; overscroll-behavior: contain; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv-row { position: relative; border-radius: 18px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv { width: 100%; display: flex !important; align-items: center; gap: 13px !important; padding: 11px 12px !important; border-radius: 18px !important; background: transparent !important; border: 0 !important; box-shadow: none !important; text-align: start; transition: background .15s; min-height: 72px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv:hover { background: var(--m-soft) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv.is-active { background: color-mix(in srgb, var(--m-brand) 11%, transparent) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv .msg-avatar { width: 52px !important; height: 52px !important; flex: none; font-size: 16px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__row1, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__row2 { display: flex; align-items: center; gap: 8px; min-width: 0; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__name { flex: 1; min-width: 0; font-size: 15.5px !important; font-weight: 700 !important; color: var(--m-text) !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__time { flex: none; font-size: 12px !important; color: var(--m-text-3) !important; font-weight: 500 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv.is-unread .msg-conv__time { color: var(--m-brand) !important; font-weight: 700 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__preview { flex: 1; min-width: 0; font-size: 14px !important; color: var(--m-text-2) !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv.is-unread .msg-conv__preview { color: var(--m-text) !important; font-weight: 600; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__badges { flex: none; display: inline-flex; align-items: center; gap: 6px; color: var(--m-text-3); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__badges > :is(.msg-badge, .msg-conv__unread, [class*="unread"]) { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: var(--m-brand) !important; color: #fff !important; font-size: 12px; font-weight: 700; display: inline-grid; place-items: center; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__del { position: absolute; inset-inline-end: 10px; top: 10px; opacity: 0; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--m-surface); border: 1px solid var(--m-line); color: var(--m-text-2); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv-row:hover .msg-conv__del { opacity: 1; }
+@media (hover: none) { html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv__del { display: none; } }
+
+/* ---------- thread ---------- */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread { min-width: 0; display: flex; flex-direction: column; position: relative; }
+html[data-theme][data-palette] body .msg-app[data-msg-app]:not([data-wall="custom"]):not([data-wall="aurora"]):not([data-wall="lagoon"]):not([data-wall="forest"]):not([data-wall="rose"]):not([data-wall="amber"]):not([data-wall="graphite"]):not([data-wall="midnight"]) .msg-thread {
+  background:
+    radial-gradient(900px 500px at 105% -10%, color-mix(in srgb, var(--m-brand) 9%, transparent), transparent 60%),
+    radial-gradient(700px 420px at -10% 110%, color-mix(in srgb, #7b5cff 8%, transparent), transparent 60%),
+    var(--m-bg) !important;
+}
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__active { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header { height: 66px; padding: 0 12px !important; gap: 6px; background: color-mix(in srgb, var(--m-surface) 88%, transparent) !important; backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--m-line) !important; box-shadow: none !important; position: relative; z-index: 3; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__peer { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__peer .msg-avatar { width: 42px !important; height: 42px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__peer-meta { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__peer-meta strong { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 16px !important; font-weight: 700; color: var(--m-text); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__role { flex: none; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: color-mix(in srgb, var(--m-brand) 12%, transparent) !important; color: var(--m-brand) !important; border: 0 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__status { font-size: 12.5px !important; color: var(--m-text-3) !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header-actions { display: flex; align-items: center; gap: 2px; flex: none; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__back { display: none; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__pinned-bar { margin: 8px 12px 0; padding: 8px 12px; border-radius: 14px; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; color: var(--m-text-2); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 18px 22px 10px !important; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-messages { display: flex; flex-direction: column; gap: 3px; width: 100%; max-width: 860px; margin-inline: auto; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-day-sep { margin: 14px 0 8px !important; text-align: center; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-day-sep span { display: inline-block; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--m-text-2); background: color-mix(in srgb, var(--m-surface) 92%, transparent) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-sm); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-system { align-self: center; margin: 8px 0; padding: 5px 14px; border-radius: 999px; font-size: 12.5px; color: var(--m-text-2); background: color-mix(in srgb, var(--m-surface) 92%, transparent); border: 1px solid var(--m-line); }
+
+/* message rows + bubbles */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row { display: flex; align-items: flex-end; gap: 8px; max-width: 74% !important; align-self: flex-start; margin: 0 !important; padding: 0 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine { align-self: flex-end; flex-direction: row; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.show-avatar { margin-top: 10px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row > .msg-avatar { width: 30px !important; height: 30px !important; font-size: 11px !important; flex: none; margin-bottom: 18px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row:not(.show-avatar) > .msg-avatar { visibility: hidden; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble-col { display: flex; flex-direction: column; gap: 3px; min-width: 0; max-width: 100%; align-items: flex-start; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-bubble-col { align-items: flex-end; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-sender-name { font-size: 12.5px !important; font-weight: 700 !important; color: var(--m-brand) !important; padding-inline: 6px; }
+/* 1-to-1 chats don't need a name + avatar on every message */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread[data-group="0"] .msg-sender-name { display: none; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread[data-group="0"] .msg-row > .msg-avatar { display: none; }
+
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble { position: relative; padding: 9px 14px 9px !important; border-radius: var(--m-r-bubble) !important; font-size: 15.5px !important; line-height: 1.55 !important; background: var(--m-theirs) !important; color: var(--m-theirs-text) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-sm) !important; word-break: break-word; overflow-wrap: anywhere; unicode-bidi: plaintext; text-align: start; max-width: 100%; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-bubble { background: var(--m-grad) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 6px 16px -8px rgba(53, 102, 245, .7) !important; }
+/* the tail: the corner next to the avatar is squarer */
+html[dir="rtl"][data-theme][data-palette] body .msg-app[data-msg-app] .msg-row:not(.is-mine) .msg-bubble { border-end-end-radius: 6px !important; }
+html[dir="rtl"][data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-bubble { border-end-start-radius: 6px !important; }
+html:not([dir="rtl"])[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row:not(.is-mine) .msg-bubble { border-end-start-radius: 6px !important; }
+html:not([dir="rtl"])[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-bubble { border-end-end-radius: 6px !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-bubble a { color: #fff; text-decoration: underline; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble--media, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble--visual { padding: 4px !important; background: var(--m-surface) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble--visual { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble img, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble video { max-width: 100%; height: auto; border-radius: 16px; display: block; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-caption { padding: 6px 8px 2px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-reply-quote { border-radius: 12px; padding: 6px 10px; margin-bottom: 6px; background: color-mix(in srgb, currentColor 9%, transparent) !important; border-inline-start: 3px solid var(--m-brand); font-size: 13.5px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row.is-mine .msg-reply-quote { border-inline-start-color: rgba(255, 255, 255, .8); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-edit-textarea { width: 100%; border-radius: 12px; }
+
+/* time + ticks stay tiny and tidy */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-meta-row { display: inline-flex; align-items: center; gap: 5px; padding-inline: 6px; font-size: 11px !important; line-height: 1; color: var(--m-text-3) !important; min-height: 14px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-ticks { color: var(--m-text-3); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-ticks.is-read { color: var(--m-brand); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-undo-btn { font-size: 11px; padding: 2px 8px; border-radius: 999px; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-reactions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: -8px; padding-inline: 8px; position: relative; z-index: 1; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-reaction-pill { height: 24px; padding: 0 8px; border-radius: 999px; font-size: 12.5px; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-sm); }
+
+/* hover actions (desktop only); long-press on touch */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-hover-actions { position: absolute; top: -16px; inset-inline-end: 8px; display: none; gap: 2px; padding: 3px; border-radius: 12px; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-md) !important; z-index: 4; }
+@media (hover: hover) { html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row:hover .msg-hover-actions { display: flex; } }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-hover-actions.is-open { display: flex; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-hover-actions button { width: 30px; height: 30px; border-radius: 9px; color: var(--m-text-2); background: transparent; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-hover-actions button:hover { background: var(--m-soft); color: var(--m-text); }
+
+/* ---------- composer: one tidy pill ---------- */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer { display: flex !important; align-items: flex-end; gap: 6px; margin: 8px 14px calc(14px + var(--m-safe-b)) !important; padding: 6px !important; border-radius: 26px !important; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-md) !important; width: auto; max-width: 860px; align-self: stretch; position: relative; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__active > .msg-composer { width: calc(100% - 28px); margin-inline: auto !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer:focus-within { border-color: var(--m-brand) !important; box-shadow: 0 0 0 4px var(--m-ring), var(--m-shadow-md) !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__toolbar { display: flex; align-items: center; gap: 0; flex: none; padding: 0 !important; border: 0 !important; background: transparent !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__toolbar .msg-icon-btn { width: 38px !important; height: 38px !important; border-radius: 50% !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__toolbar .msg-icon-btn[aria-label*="Markdown"], html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__toolbar .msg-icon-btn[aria-label*="تنسيق"] { display: none !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__input-row { flex: 1; min-width: 0; display: flex; align-items: flex-end; gap: 6px; padding: 0 !important; background: transparent !important; border: 0 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__input { flex: 1; min-width: 0; max-height: 140px; min-height: 38px; padding: 8px 6px !important; border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; color: var(--m-text) !important; font-size: 16px !important; line-height: 1.5; resize: none; border-radius: 0 !important; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__input::placeholder { color: var(--m-text-3); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-send-btn { width: 42px !important; height: 42px !important; flex: none; border-radius: 50% !important; background: var(--m-grad) !important; color: #fff !important; border: 0 !important; display: grid; place-items: center; box-shadow: 0 8px 16px -8px rgba(53, 102, 245, .8) !important; transition: transform .12s; }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-send-btn:active { transform: scale(.94); }
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-reply-preview, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-upload-preview { margin: 8px 14px 0 !important; border-radius: 16px !important; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; }
+
+/* popovers, menus, pickers */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-menu__panel, html[data-theme] .msg-menu__panel, html[data-theme] .msg-reaction-picker { border-radius: 16px !important; background: var(--m-surface) !important; border: 1px solid var(--m-line) !important; box-shadow: var(--m-shadow-md) !important; }
+html[data-theme] .msg-menu__item { border-radius: 10px; }
+html[data-theme] .msg-menu__item:hover { background: var(--m-soft); }
+
+/* info panel */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-info { background: var(--m-surface) !important; border-inline-start: 1px solid var(--m-line) !important; }
+
+/* empty state */
+html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__empty { display: grid; place-items: center; align-content: center; gap: 10px; height: 100%; text-align: center; color: var(--m-text-2); padding: 24px; }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* laptop+ : three-pane comfortable widths */
+@media (min-width: 1100px) {
+  html[data-theme][data-palette] body .msg-app[data-msg-app] { --msg-rail-w: 380px; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row { max-width: 64% !important; }
+}
+
+/* tablet / small laptop: slimmer rail */
+@media (min-width: 761px) and (max-width: 1099px) {
+  html[data-theme][data-palette] body .msg-app[data-msg-app] { --msg-rail-w: 320px; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] { display: grid !important; grid-template-columns: var(--msg-rail-w) minmax(0, 1fr) !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] > .msg-rail, html[data-theme][data-palette] body .msg-app[data-msg-app].thread-open > .msg-rail { display: flex !important; transform: none !important; position: relative !important; width: auto !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] > .msg-thread { display: flex !important; transform: none !important; position: relative !important; width: auto !important; height: 100%; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__back { display: none !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv .msg-avatar { width: 46px !important; height: 46px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new span { display: none; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new { width: 40px; padding: 0 !important; display: inline-grid; place-items: center; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row { max-width: 82% !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app].has-info .msg-info { position: absolute; inset-block: 0; inset-inline-end: 0; width: min(340px, 90%); z-index: 20; box-shadow: var(--m-shadow-md); }
+  html[data-theme][data-palette] body .msg-app[data-msg-app].has-info { grid-template-columns: var(--msg-rail-w) 1fr !important; }
+}
+
+/* phone: single column, bottom tab bar, big touch targets */
+@media (max-width: 760px) {
+  html[data-theme][data-palette] body .msg-app[data-msg-app] { display: block; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] > .msg-rail { height: 100%; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app].thread-open > .msg-rail { display: none !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app]:not(.thread-open) > .msg-thread { display: none !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app].thread-open > .msg-thread { display: flex !important; height: 100%; transform: none !important; position: relative !important; }
+  html[data-theme] .shell { height: 100dvh; }
+  html[data-theme] .shell__tabs { height: var(--m-tab-h); padding: 6px 6px calc(6px + var(--m-safe-b)); background: color-mix(in srgb, var(--m-surface) 92%, transparent) !important; backdrop-filter: blur(14px); border-top: 1px solid var(--m-line) !important; }
+  html[data-theme] .shell__tab { border-radius: 14px; color: var(--m-text-3); font-size: 11px; font-weight: 600; }
+  html[data-theme] .shell__tab.is-active { color: var(--m-brand) !important; background: color-mix(in srgb, var(--m-brand) 10%, transparent); }
+  html[data-theme] .shell__tab.is-active::after { display: none; }
+
+  html[data-theme][data-palette] body .msg-app[data-msg-app] { --msg-rail-w: 100%; border-radius: 0 !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-head { padding: 14px 14px 4px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-title { font-size: 1.55rem !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new span { display: none; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-new { width: 40px; padding: 0 !important; display: inline-grid; place-items: center; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-search { margin: 8px 14px 4px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .st-strip, html[data-theme][data-palette] body .msg-app[data-msg-app] .mr-filters { padding-inline: 14px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-rail__list { padding-inline: 6px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv { padding: 10px 10px !important; min-height: 70px; }
+
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__back { display: inline-flex !important; width: 40px; height: 40px; }
+  html[dir="rtl"][data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__back svg { transform: scaleX(-1); }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header { height: 62px; padding: 0 6px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__peer .msg-avatar { width: 40px !important; height: 40px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header-actions .msg-icon-btn { width: 38px !important; height: 38px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header-actions .msg-full-btn, html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header-actions .msg-rail-toggle { display: none !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-rail-toggle { display: none !important; }
+
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__scroll { padding: 12px 10px 6px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row { max-width: 88% !important; gap: 6px; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-bubble { font-size: 16px !important; padding: 8px 13px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer { margin: 6px 8px calc(8px + var(--m-safe-b)) !important; padding: 5px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__active > .msg-composer { width: calc(100% - 16px); }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-composer__toolbar .msg-icon-btn { width: 40px !important; height: 40px !important; }
+  /* the whole info panel becomes a full-screen sheet on phones */
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-info { position: fixed; inset: 0; z-index: 60; width: 100% !important; border: 0 !important; }
+}
+
+@media (max-width: 360px) {
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-conv .msg-avatar { width: 46px !important; height: 46px !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-row { max-width: 92% !important; }
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header-actions .msg-icon-btn:nth-child(n+3) { display: none; }
+}
+
+/* short landscape phones: give the messages the room */
+@media (max-height: 480px) and (orientation: landscape) {
+  html[data-theme][data-palette] body .msg-app[data-msg-app] .msg-thread__header { height: 52px; }
+  html[data-theme] .shell__tabs { display: none; }
+}
+
+/* reduced motion + focus */
+@media (prefers-reduced-motion: reduce) { html[data-theme][data-palette] body .msg-app[data-msg-app] * { scroll-behavior: auto !important; transition: none !important; animation-duration: .01ms !important; } }
+html[data-theme][data-palette] body .msg-app[data-msg-app] :is(button, a, input, textarea):focus-visible { outline: 2px solid var(--m-brand); outline-offset: 2px; }

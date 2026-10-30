@@ -1067,7 +1067,7 @@ export default function ThreadPanel({
 
   if (!conversation) {
     return (
-      <section className="msg-thread" data-thread-panel>
+      <section className="msg-thread" data-thread-panel data-group={conversation?.is_group ? '1' : '0'}>
         <div className="msg-thread__empty" data-thread-empty>
           <div className="msg-thread__empty-icon">
             <Icon name="message" size={32} />
@@ -1291,7 +1291,7 @@ export default function ThreadPanel({
   let lastTs = 0;
 
   return (
-    <section className="msg-thread" data-thread-panel>
+    <section className="msg-thread" data-thread-panel data-group={conversation?.is_group ? '1' : '0'}>
       <div
         className="msg-thread__active"
         data-thread-active
